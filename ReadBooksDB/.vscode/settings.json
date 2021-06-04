@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\ANGELA\\Desktop\\UNIVERSIDAD\\PROGRAMACIÓN2\\acm.jar"
+    ]
+}
