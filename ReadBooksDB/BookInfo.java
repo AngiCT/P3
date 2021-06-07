@@ -1,7 +1,5 @@
 import java.time.LocalDateTime;
 
-import javax.swing.text.DefaultEditorKit.CutAction;
-
 import java.time.Duration;
 
 public class BookInfo {
@@ -44,38 +42,38 @@ public class BookInfo {
 	public byte[] toBytes() {
 		byte[] record = new byte[SIZE];
 		int cursor = 0;
-		PackUtils.packLimitedString(title, 2*TITLE_LIMIT, record, cursor);
+		PackUtils.packLimitedString(title, TITLE_LIMIT, record, cursor);
 		cursor += 2*TITLE_LIMIT;
-		PackUtils.packLimitedString(author, 2*AUTHOR_LIMIT, record, cursor);
+		PackUtils.packLimitedString(author, AUTHOR_LIMIT, record, cursor);
 		cursor += 2*AUTHOR_LIMIT;
-		PackUtils.packLimitedString(series, 2*SERIES_LIMIT, record, cursor);
+		PackUtils.packLimitedString(series, SERIES_LIMIT, record, cursor);
 		cursor += 2*SERIES_LIMIT;
 		PackUtils.packInt(pages, record, cursor);;
 		cursor += 4;
 		PackUtils.packBoolean(finished, record, cursor);
 		cursor += 1;
-		PackUtils.packLimitedString(startDate, 2*DATE_LIMIT, record, cursor);
+		PackUtils.packLimitedString(startDate, DATE_LIMIT, record, cursor);
 		cursor += 2*DATE_LIMIT;
-		PackUtils.packLimitedString(endDate, 2*DATE_LIMIT, record, cursor);
+		PackUtils.packLimitedString(endDate, DATE_LIMIT, record, cursor);
 		
 		return record;
 	}
 
 	public static BookInfo fromBytes (byte[] record) {
 		int cursor = 0;
-		String title = PackUtils.unpackLimitedString(2*TITLE_LIMIT, record, cursor);
+		String title = PackUtils.unpackLimitedString(TITLE_LIMIT, record, cursor);
 		cursor += 2*TITLE_LIMIT;
-		String autor = PackUtils.unpackLimitedString(2*AUTHOR_LIMIT, record, cursor);
+		String autor = PackUtils.unpackLimitedString(AUTHOR_LIMIT, record, cursor);
 		cursor += 2*AUTHOR_LIMIT;
-		String series = PackUtils.unpackLimitedString(2*SERIES_LIMIT, record, cursor);
+		String series = PackUtils.unpackLimitedString(SERIES_LIMIT, record, cursor);
 		cursor += 2*SERIES_LIMIT;
 		int pages = PackUtils.unpackInt(record, cursor);
 		cursor += 4;
 		Boolean finished = PackUtils.unpackBoolean(record, cursor);
 		cursor += 1;
-		String start = PackUtils.unpackLimitedString(2*DATE_LIMIT, record, cursor);
-		cursor *= 2*DATE_LIMIT;
-		String end = PackUtils.unpackLimitedString(2*DATE_LIMIT, record, cursor);
+		String start = PackUtils.unpackLimitedString(DATE_LIMIT, record, cursor);
+		cursor += 2*DATE_LIMIT;
+		String end = PackUtils.unpackLimitedString(DATE_LIMIT, record, cursor);
 
 		return new BookInfo (title,autor,series,pages,finished,start,end);
 	}

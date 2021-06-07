@@ -44,11 +44,24 @@ public class ReadBooksDB {
 	}
 
 	public int searchBookByTitle (String title) throws IOException {
-		throw new UnsupportedOperationException ("TO-DO");
+		for(int i = 0; i < numBooks; i++){
+			BookInfo book = readBookInfo(i);
+			if(title.equalsIgnoreCase(book.getTitle())){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public boolean deleteByTitle (String title) throws IOException {
-		throw new UnsupportedOperationException ("TO-DO");
+		int position = searchBookByTitle(title);
+		if(position == -1)
+			return false;
+		BookInfo book = readBookInfo(numBooks-1);
+		writeBookInfo(position, book);
+		booksDB.setLength(booksDB.length()-BookInfo.SIZE);
+		numBooks--;
+		return true;
 	}
 
 }
